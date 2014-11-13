@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SearchServlet extends HttpServlet {
@@ -48,8 +50,10 @@ public class SearchServlet extends HttpServlet {
         if(br0 != null){
             json = br0.readLine();
         }
-		ObjectMapper reqMapper = new ObjectMapper();		
-		Map<String, String> jsonMap = reqMapper.readValue(json, Map.class);
+		ObjectMapper reqMapper = new ObjectMapper();
+		TypeReference<HashMap<String, String>> typeRef 
+        	= new TypeReference<HashMap<String, String>>() {};
+		Map<String, String> jsonMap = reqMapper.readValue(json, typeRef);
 		
 		String keyword = jsonMap.get("keyword");
 
