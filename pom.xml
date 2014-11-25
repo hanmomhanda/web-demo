@@ -48,8 +48,6 @@
 	    <version>20140107</version>
 	    <scope>test</scope>
 	</dependency>
-	
-    
   </dependencies>
   <build>
     <finalName>web-demo</finalName>
@@ -63,6 +61,15 @@
             <argLine>-Dfile.encoding=UTF-8</argLine>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+	  <artifactId>maven-compiler-plugin</artifactId>
+	  <version>3.1</version>
+	  <configuration>
+	    <source>1.7</source>
+	    <target>1.7</target>
+	  </configuration>
+	</plugin>
       </plugins>
     </pluginManagement>
   </build>
