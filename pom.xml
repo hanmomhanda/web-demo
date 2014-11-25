@@ -6,6 +6,13 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>Sample Maven Webapp</name>
+  <properties>
+    <file.encoding>UTF-8</file.encoding>
+    <maven.compile.encoding>UTF-8</maven.compile.encoding>
+    <maven.test.compile.encoding>UTF-8</maven.test.compile.encoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -46,5 +53,17 @@
   </dependencies>
   <build>
     <finalName>web-demo</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.18</version>
+          <configuration>
+            <argLine>-Dfile.encoding=UTF-8</argLine>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
