@@ -59,7 +59,6 @@ jQuery(document).ready( function () {
             , thumbDiv
             , capDiv
             , bookImg
-            , titleP
           ;
 
             for ( var i=0, max=bookList.length, book ; i < max ; i++ ) {
@@ -69,7 +68,6 @@ jQuery(document).ready( function () {
                 thumbDiv = document.createElement('div');
                 capDiv = document.createElement('div');
                 bookImg = document.createElement('img');
-                titleP = document.createElement('p');
 
                 colDiv.setAttribute('class', 'col-sm-6 col-md-4');
                 thumbDiv.setAttribute('class', 'thumbnail');
@@ -82,11 +80,9 @@ jQuery(document).ready( function () {
                 bookImg.setAttribute('data-src', book.cover_l_url);
                 bookImg.setAttribute('alt', 'Thumbnail');
 
-                titleP.innerHTML = book.title;
-
-                capDiv.appendChild(titleP);
                 book.title = book.title.replace('&lt;b&gt;', '');
                 book.title = book.title.replace('&lt;/b&gt;', '');
+                
                 capDiv.innerHTML='<h3>'+book.title+'</h3>'+'<p>'+book.description+'</p>'+'<a href="' + book.link + '" class="btn btn-primary" role="button" target="_blank">상세보기</a>';
 
                 thumbDiv.appendChild(bookImg);
