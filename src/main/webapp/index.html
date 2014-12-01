@@ -19,14 +19,14 @@
         <div class='row'>
         <form id='frmSearch' action='SearchServlet' method='POST'>
             <div class='col-xs-8'><input id='txtKeyword' name='keyword' type="text" class="form-control" placeholder="검색어를 입력하세요"></div>
-            <div class='col-xs-4'><a id='btnSearch' class="btn btn-default" href="#" role="button">Search</a></div>            
+            <div class='col-xs-4'><a id='btnSearch' class="btn btn-default" href="#" role="button">Search</a></div>
         </form>
-        </div>        
+        </div>
       </div>
-    
+
       <div class="bs-example">
         <div class="row">
-          <div id='searchResult'></div>      
+          <div id='searchResult'></div>
         </div>
       </div><!-- /.bs-example -->
       <div id="footer">
@@ -39,55 +39,56 @@
 <script src="public/js/bootstrap.min.js"></script>
 <script>
 jQuery(document).ready( function () {
-    var 
-        resultDiv = document.getElementById('searchResult')
-      , colDiv
-      , thumbDiv
-      , capDiv
-      , bookImg
-    ;
-    
-    var clearResult = function() {        
+    var resultDiv = document.getElementById('searchResult');
+
+    var clearResult = function() {
         while (resultDiv.firstChild) {
             resultDiv.removeChild(resultDiv.firstChild);
         }
     };
 
 	var goSearch = function () {
-    
+
 		clearResult();
 
 	    var renderWithData = function (data) {
 
 	        var jsonObj = JSON.parse(data)
-	          , bookList = jsonObj.channel.item	          
-	        ;
-	        
+	          , bookList = jsonObj.channel.item
+            , colDiv
+            , thumbDiv
+            , capDiv
+            , bookImg
+            , titleP
+          ;
+
             for ( var i=0, max=bookList.length, book ; i < max ; i++ ) {
                 book = bookList[i];
-                
+
                 colDiv = document.createElement('div');
                 thumbDiv = document.createElement('div');
                 capDiv = document.createElement('div');
                 bookImg = document.createElement('img');
                 titleP = document.createElement('p');
-                
+
                 colDiv.setAttribute('class', 'col-sm-6 col-md-4');
                 thumbDiv.setAttribute('class', 'thumbnail');
-                capDiv.setAttribute('class', 'caption');
-                
+//                 capDiv.setAttribute('class', 'caption');
+
                 resultDiv.appendChild(colDiv);
-	        	colDiv.appendChild(thumbDiv);
+	            colDiv.appendChild(thumbDiv);
 
                 bookImg.setAttribute('src', book.cover_l_url);
                 bookImg.setAttribute('data-src', book.cover_l_url);
-                bookImg.setAttribute('alt', 'Thumbnail');                
+                bookImg.setAttribute('alt', 'Thumbnail');
 
                 titleP.innerHTML = book.title;
 
-                capDiv.appendChild(titleP)
+                capDiv.appendChild(titleP);
+                book.title = book.title.replace('&lt;b&gt;', '');
+                book.title = book.title.replace('&lt;/b&gt;', '');
                 capDiv.innerHTML='<h3>'+book.title+'</h3>'+'<p>'+book.description+'</p>'+'<a href="' + book.link + '" class="btn btn-primary" role="button" target="_blank">상세보기</a>';
-	        	
+
                 thumbDiv.appendChild(bookImg);
                 thumbDiv.appendChild(capDiv);
             }
@@ -96,7 +97,7 @@ jQuery(document).ready( function () {
 	    var handleError = function (data) {
 	        console.log("Data Receiving Error");
 	        console.dir(data);
-            resultDiv.innerHTML=data.responseText;            
+            resultDiv.innerHTML=data.responseText;
 	    };
 
         $.ajax({
@@ -106,9 +107,9 @@ jQuery(document).ready( function () {
             data: JSON.stringify({"keyword": $('#txtKeyword').val()}),
             success: renderWithData,
             error: handleError
-        });        
+        });
 	};
-	
+
 	$("#btnSearch").click( goSearch );
 
 });

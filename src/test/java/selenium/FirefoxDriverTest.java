@@ -36,12 +36,13 @@ public class FirefoxDriverTest {
     driver.findElement(By.id("txtKeyword")).clear();
     driver.findElement(By.id("txtKeyword")).sendKeys("자바");
     driver.findElement(By.id("btnSearch")).click();
+    String bookTitle = driver.findElement(By.xpath("/html/body/div/div[2]/div/div/div[2]/div/div/h3")).getText();
     driver.findElement(By.xpath("(//a[contains(text(),'상세보기')])[2]")).click();
     String nextPageUrl = driver.findElement(By.xpath("(//a[contains(text(),'상세보기')])[2]")).getAttribute("href");
     driver.get(nextPageUrl);
     assertTrue(driver
     		.getTitle()
-    		.startsWith("자바+안드로이드를 다루는 기술"));
+    		.startsWith(bookTitle));
   }
 
   @After
