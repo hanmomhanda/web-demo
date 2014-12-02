@@ -1,5 +1,6 @@
 package selenium;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
@@ -30,10 +31,19 @@ public class InternetExplorerDriverTest {
 
   @Test
   public void InternetExplorerTest() throws Exception {
-    driver.get(baseUrl + "/");
-    driver.findElement(By.id("txtKeyword")).clear();
-    driver.findElement(By.id("txtKeyword")).sendKeys("자바");
-    driver.findElement(By.id("btnSearch")).click();
+	    driver.get(baseUrl + "/");
+	    driver.findElement(By.id("txtKeyword")).clear();
+	    driver.findElement(By.id("txtKeyword")).sendKeys("자바");
+	    driver.findElement(By.id("btnSearch")).click();
+//	    String bookTitle = driver.findElement(By.xpath("/html/body/div/div[2]/div/div/div[2]/div/div/h3")).getText();
+	    String bookTitle = driver.findElement(By.cssSelector("html body div#wrap div.container div.row form#frmSearch div.col-xs-4 a#btnSearch.btn.btn-default")).getText();
+	    
+	    driver.findElement(By.xpath("(//a[contains(text(),'상세보기')])[2]")).click();
+	    String nextPageUrl = driver.findElement(By.xpath("(//a[contains(text(),'상세보기')])[2]")).getAttribute("href");
+	    driver.get(nextPageUrl);
+	    assertTrue(driver
+	    		.getTitle()
+	    		.startsWith(bookTitle));
   }	
 
   @After

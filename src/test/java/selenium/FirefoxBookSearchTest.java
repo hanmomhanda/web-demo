@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class YSprojectLoginTest {
+public class FirefoxBookSearchTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,17 +23,14 @@ public class YSprojectLoginTest {
   }
 
   @Test
-  public void testYSprojectLogin() throws Exception {
-    driver.get(baseUrl + "/ysproject/");
-    driver.findElement(By.linkText("로그인")).click();
-    driver.findElement(By.id("username")).clear();
-    driver.findElement(By.id("username")).sendKeys("vv");
-    driver.findElement(By.id("password")).clear();
-    driver.findElement(By.id("password")).sendKeys("vv");
-    driver.findElement(By.xpath("//button[@type='submit']")).click();
-    driver.findElement(By.linkText("내 원서")).click();
-    System.out.println(driver.findElement(By.xpath("/html/body/section[2]/div/div/div/h2")).getText());
-    driver.findElement(By.id("verify")).click();
+  public void testFirefoxBookSearch() throws Exception {
+    driver.get(baseUrl + "/web-demo/");
+    driver.findElement(By.id("txtKeyword")).clear();
+    driver.findElement(By.id("txtKeyword")).sendKeys("자바");
+    driver.findElement(By.id("btnSearch")).click();
+    driver.findElement(By.xpath("(//a[contains(text(),'상세보기')])[2]")).click();
+    driver.findElement(By.cssSelector("h2.title > span")).click();
+    assertTrue(isElementPresent(By.xpath("(//a[contains(text(),'상세보기')])[2]")));
   }
 
   @After
